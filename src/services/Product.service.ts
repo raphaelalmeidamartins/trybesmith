@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import validator from '../utils/validator';
-import Product from '../interfaces/Product.interface';
+import Product from '../utils/types/Product.types';
 import ProductModel from '../models/Product.model';
 
 export default class ProductService {
