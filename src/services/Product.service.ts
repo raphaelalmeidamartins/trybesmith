@@ -28,4 +28,9 @@ export default class ProductService {
     const product = await this.model.register(data);
     return product;
   }
+
+  public async list() {
+    const products = await this.model.list();
+    return products;
+  }
 }

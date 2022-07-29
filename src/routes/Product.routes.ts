@@ -4,6 +4,7 @@ import productController from '../msc';
 
 const productRoutes = Router();
 
+productRoutes.get('/', productController.list);
 productRoutes.post('/', productController.register);
 
 export default productRoutes;

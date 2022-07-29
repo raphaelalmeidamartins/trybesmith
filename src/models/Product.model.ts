@@ -19,4 +19,15 @@ export default class ProductModel {
 
     return { id: +insertId, ...data };
   }
+
+  public async list() {
+    const sql = `
+      SELECT *
+      FROM Trybesmith.Products;
+    `;
+
+    const result = await this.connection.query(sql);
+    const [rows] = result;
+    return rows as Product[] | [];
+  }
 }
