@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import CustomError from '../types/CustomError';
+import CustomError from '../types/CustomError.types';
 
 export default function errorMiddleware(
   err: CustomError,
