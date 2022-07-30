@@ -5,4 +5,8 @@ interface Product {
   orderId?: number;
 }
 
-export default Product;
+interface ProductReturned extends Product {
+  id: number,
+}
+
+export { Product, ProductReturned };
