@@ -1,7 +1,7 @@
 import Joi from 'joi';
-import validator from '../utils/validator';
-import Product from '../utils/types/Product.types';
 import ProductModel from '../models/Product.model';
+import { Product, ProductReturned } from '../utils/types/Product.types';
+import validator from '../utils/validator';
 
 export default class ProductService {
   constructor(private model: ProductModel) {
@@ -29,7 +29,7 @@ export default class ProductService {
     return product;
   }
 
-  public async list() {
+  public async list(): Promise<ProductReturned[]> {
     const products = await this.model.list();
     return products;
   }
