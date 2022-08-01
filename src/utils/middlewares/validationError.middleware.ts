@@ -14,8 +14,10 @@ export default function validationErrorMiddleware(
     case type === 'any.required':
       res.status(StatusCodes.BAD_REQUEST).json({ message: err.message });
       break;
-    case type.includes('string') || type.includes('number'):
-      res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ message: err.message });
+    case type.includes('string') || type.includes('number') || type.includes('array'):
+      res
+        .status(StatusCodes.UNPROCESSABLE_ENTITY)
+        .json({ message: err.message });
       break;
     default: next(err); break;
   }
