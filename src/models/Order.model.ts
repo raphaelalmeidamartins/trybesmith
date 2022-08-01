@@ -6,14 +6,15 @@ export default class OrderModel {
     this.connection = connection;
   }
 
-  private async updateProducts(productsIds: number[]): Promise<void> {
+  private async updateProducts(productsIds: number[], orderId: number): Promise<void> {
     const sqlProduct = `
-      INSERT INTO Trybesmith.Products (orderId)
-      VALUES (?);
+      UPDATE Trybesmith.Products
+      SET orderId = ?
+      WHERE id = ?;
     `;
 
     const result = productsIds.map((id) =>
-      this.connection.query<ResultSetHeader>(sqlProduct, id));
+      this.connection.query<ResultSetHeader>(sqlProduct, [orderId, id]));
     await Promise.all(result);
   }
 
@@ -31,7 +32,7 @@ export default class OrderModel {
       [[userId]],
     );
 
-    await this.updateProducts(productsIds);
+    await this.updateProducts(productsIds, insertId);
     const order = await this.getById(insertId);
 
     return order;
