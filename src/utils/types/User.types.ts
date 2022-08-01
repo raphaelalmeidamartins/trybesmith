@@ -9,7 +9,12 @@ interface User extends Login {
   level: number,
 }
 
+interface UserReturned extends User {
+  id: number,
+}
+
 export {
   User,
+  UserReturned,
   Login,
 };
