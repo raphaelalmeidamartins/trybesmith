@@ -5,11 +5,11 @@ interface OrderRegister {
 interface Order {
   id?: number;
   userId: number;
+  productsIds: number[];
 }
 
 interface OrderReturned extends Order {
   id: number;
-  productsIds: number[];
 }
 
 export { OrderRegister, Order, OrderReturned };
