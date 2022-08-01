@@ -1,5 +1,5 @@
 import { Pool, ResultSetHeader } from 'mysql2/promise';
-import { User } from '../utils/types/User.types';
+import { User, UserReturned } from '../utils/types/User.types';
 
 export default class UserModel {
   constructor(private connection: Pool) {
@@ -22,7 +22,7 @@ export default class UserModel {
     return +insertId;
   }
 
-  public async getByUsername(username: string): Promise<User> {
+  public async getByUsername(username: string): Promise<UserReturned> {
     const sql = `
       SELECT *
       FROM Trybesmith.Users
@@ -31,7 +31,7 @@ export default class UserModel {
 
     const result = await this.connection.query(sql, [username]);
     const [rows] = result;
-    const [user] = rows as User[] | [];
+    const [user] = rows as UserReturned[] | [];
     return user;
   }
 }
