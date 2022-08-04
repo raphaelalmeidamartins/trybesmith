@@ -1,4 +1,5 @@
 DROP SCHEMA IF EXISTS Trybesmith;
+
 CREATE SCHEMA IF NOT EXISTS Trybesmith;
 
 CREATE TABLE Trybesmith.Users (
@@ -12,15 +13,26 @@ CREATE TABLE Trybesmith.Users (
 CREATE TABLE Trybesmith.Orders (
   id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   userId INTEGER,
-  FOREIGN KEY (userId) REFERENCES Trybesmith.Users (id)
+  FOREIGN KEY (userId)
+    REFERENCES Trybesmith.Users (id)
 );
 
 CREATE TABLE Trybesmith.Products (
   id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
-  amount TEXT NOT NULL,
+  amount TEXT NOT NULL
+);
+
+CREATE TABLE Trybesmith.ProductsOrders (
+  id INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL,
   orderId INTEGER,
-  FOREIGN KEY (orderId) REFERENCES Trybesmith.Orders (id)
+  productId INTEGER,
+  FOREIGN KEY (orderId)
+    REFERENCES Trybesmith.Orders (id)
+    ON DELETE CASCADE,
+  FOREIGN KEY (productId)
+    REFERENCES Trybesmith.Products (id)
+    ON DELETE CASCADE
 );
 
 INSERT INTO
@@ -59,25 +71,44 @@ VALUES
   ("Espada curta", "10 peças de ouro");
 
 INSERT INTO
-  Trybesmith.Products (name, amount, orderId)
+  Trybesmith.Products (name, amount)
 VALUES
   (
     "Escudo desnecessariamente grande",
-    "20 peças de ouro",
-    1
+    "20 peças de ouro"
   );
 
 INSERT INTO
-  Trybesmith.Products (name, amount, orderId)
+  Trybesmith.ProductsOrders (orderId, productId)
 VALUES
-  ("Adaga de Aço Valírico", "1 peça de ouro", 2);
+  (1, 2);
 
 INSERT INTO
-  Trybesmith.Products (name, amount, orderId)
+  Trybesmith.Products (name, amount)
 VALUES
-  ("Colar de fogo", "1 peça de ouro", 2);
+  ("Adaga de Aço Valírico", "1 peça de ouro");
 
 INSERT INTO
-  Trybesmith.Products (name, amount, orderId)
+  Trybesmith.ProductsOrders (orderId, productId)
 VALUES
-  ("Engenhoca aleatória", "15 peças de ouro", 3);
+  (2, 3);
+
+INSERT INTO
+  Trybesmith.Products (name, amount)
+VALUES
+  ("Colar de fogo", "1 peça de ouro");
+
+INSERT INTO
+  Trybesmith.ProductsOrders (orderId, productId)
+VALUES
+  (2, 4);
+
+INSERT INTO
+  Trybesmith.Products (name, amount)
+VALUES
+  ("Engenhoca aleatória", "15 peças de ouro");
+
+INSERT INTO
+  Trybesmith.ProductsOrders (orderId, productId)
+VALUES
+  (3, 5);
