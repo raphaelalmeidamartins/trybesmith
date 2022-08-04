@@ -6,11 +6,10 @@ export default class OrderModel {
     this.connection = connection;
   }
 
-  private async updateProducts(productsIds: number[], orderId: number): Promise<void> {
+  private async updateProductsOrders(productsIds: number[], orderId: number): Promise<void> {
     const sqlProduct = `
-      UPDATE Trybesmith.Products
-      SET orderId = ?
-      WHERE id = ?;
+      INSERT INTO Trybesmith.ProductsOrders (orderId, productId)
+      VALUES (?, ?);
     `;
 
     const result = productsIds.map((id) =>
@@ -32,7 +31,7 @@ export default class OrderModel {
       [[userId]],
     );
 
-    await this.updateProducts(productsIds, insertId);
+    await this.updateProductsOrders(productsIds, insertId);
     const order = await this.getById(insertId);
 
     return order;
@@ -45,11 +44,11 @@ export default class OrderModel {
       SELECT
         orders.id,
         orders.userId,
-        JSON_ARRAYAGG(products.id) AS productsIds 
+        JSON_ARRAYAGG(products.productId) AS productsIds
       FROM
         Trybesmith.Orders AS orders
           LEFT JOIN
-        Trybesmith.Products AS products
+        Trybesmith.ProductsOrders AS products
         ON orders.id = products.orderId
       WHERE orders.id = ?
       GROUP BY orders.id
@@ -67,11 +66,11 @@ export default class OrderModel {
       SELECT
         orders.id,
         orders.userId,
-        JSON_ARRAYAGG(products.id) AS productsIds 
+        JSON_ARRAYAGG(products.productId) AS productsIds
       FROM
         Trybesmith.Orders AS orders
           LEFT JOIN
-        Trybesmith.Products AS products
+        Trybesmith.ProductsOrders AS products
         ON orders.id = products.orderId
       GROUP BY orders.id
       ORDER BY orders.userId;
