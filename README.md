@@ -76,7 +76,13 @@ docker-compose up -d --buid
 
 ### 3 - Run the SQL Script to create the database
 
-Connect to the MySQL server running on the 3306 port using a MySQL client of your choice. The user is `root` and the password is `password`. In the client, run the script in the `Trybesmith.sql` file.
+Connect to the MySQL server running on the 3306 port using a MySQL client of your choice. With the following credentials:
+
+* host: `db`
+* user: `root`
+* password: `password`
+
+Then, in the client, run the script in the `Trybesmith.sql` file.
 
 ### 4 - Run this command to attach the container to your terminal
 ```sh
@@ -119,7 +125,13 @@ docker-compose up -d --build
 
 ### 3 - Execute o script SQL para criar o banco de dados
 
-Conecte ao servidor MySQL rodando na porta 3306 usando um cliente MySQL de sua preferência. O usuário é `root` e a senha é `password`. No cliente, rode o script que está no arquivo `Trybesmith.sql`.
+Conecte ao servidor MySQL rodando na porta 3306 usando um cliente MySQL de sua preferência. Utilize as seguintes credenciais:
+
+* host: `db`
+* user: `root`
+* password: `password`
+
+Então, no cliente, rode o script que está no arquivo `Trybesmith.sql`.
 
 ### 4 - Rode o comando para abrir o terminal do container store_manager
 ```sh
