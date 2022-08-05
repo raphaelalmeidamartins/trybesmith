@@ -133,7 +133,7 @@ Conecte ao servidor MySQL rodando na porta 3306 usando um cliente MySQL de sua p
 
 Então, no cliente, rode o script que está no arquivo `Trybesmith.sql`.
 
-### 4 - Rode o comando para abrir o terminal do container store_manager
+### 4 - Rode o comando para abrir o terminal do container trybesmith
 ```sh
 docker exec -it trybesmith bash
 ```
