@@ -1,0 +1,152 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Trybesmith",
+    "description": "This is a API to a medieval items store. It's possible to register users, products and orders. It uses JWT (Json Web Token) authentication. To have access to the authenticated routes, sign in or create a new user to receive a token. Note: this documentation is underdevelopment",
+    "contact": {
+      "email": "raphael.almeida.martins@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "API de teste"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Login route",
+        "description": "Where the user can login and receive a token",
+        "tags": ["Login"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              },
+              "examples": {
+                "login": {
+                  "value": {
+                    "username": "fulano@gmail.com",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some required fields are invalid or missing"
+          },
+          "401": {
+            "description": "Invalid username or password"
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Route to register user",
+        "description": "Route where it is possible to register new users",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "username": "MAX",
+                    "password": "SavingPeople",
+                    "class": "swordsman",
+                    "level": 10
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some required fields are invalid or missing"
+          },
+          "409": {
+            "description": "User already registered"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateUser": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "class": {
+            "type": "string"
+          },
+          "level": {
+            "type": "number"
+          }
+        }
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

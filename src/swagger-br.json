@@ -1,0 +1,152 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Trybesmith",
+    "description": "Esta é uma API de venda de produtos medievais. É possível cadastrar usuários, produtos e pedidos. A autenticação é feita com JWT (Json Web Token). Para acessar as rotas autenticadas, faça login ou crie um novo usuário para receber o token. Observação: está documentação ainda está em desenvolvimento",
+    "contact": {
+      "email": "raphael.almeida.martins@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "API de teste"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Rota de login",
+        "description": "Rota onde o usuário faz login e recebe o token",
+        "tags": ["Login"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              },
+              "examples": {
+                "login": {
+                  "value": {
+                    "username": "fulano@gmail.com",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some required fields are invalid or missing"
+          },
+          "401": {
+            "description": "Invalid username or password"
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Rota de cadastro de usuário",
+        "description": "Rota responsável pelo cadastro de novos usuários",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "username": "MAX",
+                    "password": "SavingPeople",
+                    "class": "swordsman",
+                    "level": 10
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some required fields are invalid or missing"
+          },
+          "409": {
+            "description": "User already registered"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateUser": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "class": {
+            "type": "string"
+          },
+          "level": {
+            "type": "number"
+          }
+        }
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
